@@ -3,27 +3,42 @@ const app = Vue.createApp({
     return {
       cart: 0,
       product: "Socks",
-      // description: "Very soft socks"
       image: "../assets/images/socks_green.jpg",
-      // link: "https://www.uipmworld.org/"
-      inventory: 15,
-      // onSale: true
+      inventory: 10,
       details: ["50% cotton", "30% wool", "20% polyester"],
       variants: [
         { id: 2234, color: "green", image: "../assets/images/socks_green.jpg" },
         { id: 2235, color: "blue", image: "../assets/images/socks_blue.jpg" },
       ],
-      // sizes: [xs, s, m, l, xl, xxl}
     };
+  },
+  computed: {
+    isAtMaxInventory() {
+      return this.cart >= this.inventory;
+    },
+    stockStatus() {
+      if (this.cart >= this.inventory) {
+        return "Out of Stock";
+      } else if (this.inventory <= 10 && this.inventory > 0) {
+        return "Almost Sold Out";
+      } else if (this.inventory > 10) {
+        return "In Stock";
+      }
+      return "Out of Stock";
+    },
   },
   methods: {
     addToCart() {
-      this.cart += 1;
+      if (this.cart < this.inventory) {
+        this.cart += 1;
+      }
     },
     decrease() {
-      this.cart -= 1;
+      if (this.cart > 0) {
+        this.cart -= 1;
+      }
     },
-    uptadeImage(variantImage) {
+    updateImage(variantImage) {
       this.image = variantImage;
     },
   },

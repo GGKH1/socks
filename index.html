@@ -16,14 +16,16 @@
       <div class="product-display">
         <div class="product-container">
           <div class="product-image">
-            <img :src="image" />
+            <img
+              :class="{ 'out-of-stock-img': !inventory }"
+              v-bind:src="image"
+            />
+
             <!-- <a :href="link" /> -->
           </div>
           <div class="product-info">
             <h1>{{product}}</h1>
-            <p v-if="inventory > 10">In Stock</p>
-            <p v-else-if="inventory <= 10 && inventory > 0">Almost Sold Out</p>
-            <p v-else>Out of Stock</p>
+            <p>{{stockStatus}}</p>
             <!-- <p v-if="onSale">On Sale </p> -->
             <!-- <p v-else>Sold out </p> -->
             <ul>
@@ -36,11 +38,28 @@
               v-for="variant in variants"
               :key="variant.id"
               @mouseover="uptadeImage(variant.image)"
+              class="color-circle"
+              :style="{backgroundColor: variant.color}"
             >
               {{variant.color}}
             </div>
-            <button class="button" v-on:click="addToCart">Add to Cart</button>
-            <button class="button" v-on:click="decrease">Remove</button>
+            <button
+              class="button"
+              :class="{disabledButton: !inventory}"
+              :disabled="!inventory"
+              :disavled="isAtMaxInventory"
+              v-on:click="addToCart"
+            >
+              Add to Cart
+            </button>
+            <button
+              class="button"
+              v-on:click="decrease"
+              :class="{disabledButton: cart === 0}"
+              :disabled="cart === 0"
+            >
+              Remove
+            </button>
           </div>
         </div>
       </div>
@@ -55,7 +74,3 @@
 </html>
 
 <!-- https://3f31c7e8.asynchronous.pages.dev/ -->
-
-<!-- https://github.com/GGKH1/socks -->
-<!-- https://github.com/GGKH1/socks -->
-<!-- https://github.com/GGKH1/socks -->
