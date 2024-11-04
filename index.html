@@ -10,8 +10,19 @@
   </head>
   <body>
     <div id="app">
-      <h1>{{product}}</h1>
       <!-- <p>{{description}}</p> -->
+      <div class="nav-bar"></div>
+      <div class="product-display">
+        <div class="product-container">
+          <div class="product-image">
+            <img :src="image" />
+            <!-- <a :href="link" /> -->
+          </div>
+          <div class="product-info">
+            <h1>{{product}}</h1>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script src="./main.js"></script>
@@ -21,3 +32,7 @@
     </script>
   </body>
 </html>
+
+<!-- https://3f31c7e8.asynchronous.pages.dev/ -->
+
+<!-- https://github.com/GGKH1/socks -->
