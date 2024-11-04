@@ -10,52 +10,40 @@
   </head>
   <body>
     <div id="app">
-      <!-- <p>{{description}}</p> -->
       <div class="nav-bar"></div>
-      <div class="cart">Cart ({{cart}})</div>
+      <div class="cart">Cart ({{ cart }})</div>
       <div class="product-display">
         <div class="product-container">
           <div class="product-image">
-            <img
-              :class="{ 'out-of-stock-img': !inventory }"
-              v-bind:src="image"
-            />
-
-            <!-- <a :href="link" /> -->
+            <img :class="{ 'out-of-stock-img': !inventory }" :src="image" />
           </div>
           <div class="product-info">
-            <h1>{{product}}</h1>
-            <p>{{stockStatus}}</p>
-            <!-- <p v-if="onSale">On Sale </p> -->
-            <!-- <p v-else>Sold out </p> -->
+            <h1>{{ title }}</h1>
+            <p>{{ stockStatus }}</p>
             <ul>
-              <li v-for="detail in details">{{detail}}</li>
+              <li v-for="detail in details">{{ detail }}</li>
             </ul>
-            <!-- <ul>
-              <li v-for="size in sizes">{{size}}</li>
-            </ul> -->
             <div
-              v-for="variant in variants"
+              v-for="(variant, index) in variants"
               :key="variant.id"
-              @mouseover="uptadeImage(variant.image)"
+              @mouseover="updateVariant(index)"
               class="color-circle"
-              :style="{backgroundColor: variant.color}"
+              :style="{ backgroundColor: variant.color }"
             >
-              {{variant.color}}
+              {{ variant.color }}
             </div>
             <button
               class="button"
-              :class="{disabledButton: !inventory}"
+              :class="{ disabledButton: !inventory }"
               :disabled="!inventory"
-              :disavled="isAtMaxInventory"
-              v-on:click="addToCart"
+              @click="addToCart"
             >
               Add to Cart
             </button>
             <button
               class="button"
-              v-on:click="decrease"
-              :class="{disabledButton: cart === 0}"
+              @click="decrease"
+              :class="{ disabledButton: cart === 0 }"
               :disabled="cart === 0"
             >
               Remove
@@ -66,10 +54,6 @@
     </div>
 
     <script src="./main.js"></script>
-
-    <script>
-      const mountedApp = app.mount("#app");
-    </script>
   </body>
 </html>
 

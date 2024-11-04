@@ -3,33 +3,48 @@ const app = Vue.createApp({
     return {
       cart: 0,
       product: "Socks",
-      image: "../assets/images/socks_green.jpg",
-      inventory: 10,
+      brand: "G&G",
+      selectedVariant: 0,
       details: ["50% cotton", "30% wool", "20% polyester"],
       variants: [
-        { id: 2234, color: "green", image: "../assets/images/socks_green.jpg" },
-        { id: 2235, color: "blue", image: "../assets/images/socks_blue.jpg" },
+        {
+          id: 2234,
+          color: "green",
+          image: "../assets/images/socks_green.jpg",
+          inventory: 10,
+        },
+        {
+          id: 2235,
+          color: "blue",
+          image: "../assets/images/socks_blue.jpg",
+          inventory: 0,
+        },
       ],
     };
   },
   computed: {
-    isAtMaxInventory() {
-      return this.cart >= this.inventory;
+    title() {
+      return `${this.brand} ${this.product}`;
+    },
+    image() {
+      return this.variants[this.selectedVariant].image;
+    },
+    inventory() {
+      return this.variants[this.selectedVariant].inventory;
     },
     stockStatus() {
-      if (this.cart >= this.inventory) {
+      if (this.inventory === 0) {
         return "Out of Stock";
-      } else if (this.inventory <= 10 && this.inventory > 0) {
+      } else if (this.inventory <= 10) {
         return "Almost Sold Out";
-      } else if (this.inventory > 10) {
+      } else {
         return "In Stock";
       }
-      return "Out of Stock";
     },
   },
   methods: {
     addToCart() {
-      if (this.cart < this.inventory) {
+      if (this.inventory > this.cart) {
         this.cart += 1;
       }
     },
@@ -38,8 +53,10 @@ const app = Vue.createApp({
         this.cart -= 1;
       }
     },
-    updateImage(variantImage) {
-      this.image = variantImage;
+    updateVariant(index) {
+      this.selectedVariant = index;
     },
   },
 });
+
+app.mount("#app");
