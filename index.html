@@ -12,6 +12,7 @@
     <div id="app">
       <!-- <p>{{description}}</p> -->
       <div class="nav-bar"></div>
+      <div class="cart">Cart ({{cart}})</div>
       <div class="product-display">
         <div class="product-container">
           <div class="product-image">
@@ -25,6 +26,21 @@
             <p v-else>Out of Stock</p>
             <!-- <p v-if="onSale">On Sale </p> -->
             <!-- <p v-else>Sold out </p> -->
+            <ul>
+              <li v-for="detail in details">{{detail}}</li>
+            </ul>
+            <!-- <ul>
+              <li v-for="size in sizes">{{size}}</li>
+            </ul> -->
+            <div
+              v-for="variant in variants"
+              :key="variant.id"
+              @mouseover="uptadeImage(variant.image)"
+            >
+              {{variant.color}}
+            </div>
+            <button class="button" v-on:click="addToCart">Add to Cart</button>
+            <button class="button" v-on:click="decrease">Remove</button>
           </div>
         </div>
       </div>
