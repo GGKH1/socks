@@ -1,11 +1,18 @@
+import ReviewForm from "./ReviewForm.js";
+import ReviewList from "./ReviewList.js";
+
 export default {
+  name: "PrdouctDisplay",
+  components: {
+    ReviewList,
+    ReviewForm,
+  },
   props: {
     cart: {
       type: Array,
       required: true,
     },
     premium: {
-      // Ensure premium is defined as a prop
       type: Boolean,
       required: true,
     },
@@ -29,8 +36,7 @@ export default {
             @mouseover="updateVariant(index)"
             class="color-circle"
             :style="{ backgroundColor: variant.color }"
-          >
-          </div>
+          ></div>
           <button
             class="button"
             :class="{ disabledButton: !inventory }"
@@ -42,11 +48,13 @@ export default {
           <button
             class="button"
             @click="decrease"
-            :class="{ disabledButton: cart === 0 }"
-            :disabled="cart === 0"
+            :class="{ disabledButton: cart.length === 0 }"
+            :disabled="cart.length === 0"
           >
             Remove
           </button>
+          <review-list v-if="reviews.length" :reviews="reviews"></review-list>
+          <review-form @review-submitted="addReview"></review-form>
         </div>
       </div>
     </div>
@@ -71,6 +79,7 @@ export default {
           inventory: 0,
         },
       ],
+      reviews: [],
     };
   },
   computed: {
@@ -93,7 +102,7 @@ export default {
       }
     },
     shipping() {
-      return this.premium ? "Free" : "$2.99"; // Access premium here
+      return this.premium ? "Free" : "$2.99";
     },
   },
   methods: {
@@ -107,6 +116,9 @@ export default {
     },
     updateVariant(index) {
       this.selectedVariant = index;
+    },
+    addReview(review) {
+      this.reviews.push(review);
     },
   },
 };

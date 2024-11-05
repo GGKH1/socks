@@ -10,7 +10,6 @@
   </head>
   <body>
     <div id="app">
-      <
       <div class="nav-bar"></div>
       <div class="cart">Cart ({{ cart.length }})</div>
       <product-display
@@ -19,9 +18,23 @@
         @decrease-cart="decreaseCart"
         :premium="premium"
       ></product-display>
+      <template>
+        <div>
+          <h1>Reviews</h1>
+          <div v-if="reviews.length > 0">
+            <ul>
+              <li v-for="review in reviews" :key="review.id">
+                {{ review.text }}
+              </li>
+            </ul>
+          </div>
+          <div v-else>
+            <p>No reviews available.</p>
+          </div>
+        </div>
+      </template>
     </div>
 
-    <script type="module" src="./components/ProductDisplay.js"></script>
     <script type="module" src="./main.js"></script>
   </body>
 </html>
