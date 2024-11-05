@@ -1,7 +1,7 @@
 export default {
   props: {
     cart: {
-      type: Number,
+      type: Array,
       required: true,
     },
     premium: {
@@ -30,7 +30,6 @@ export default {
             class="color-circle"
             :style="{ backgroundColor: variant.color }"
           >
-            {{ variant.color }}
           </div>
           <button
             class="button"
@@ -100,11 +99,11 @@ export default {
   methods: {
     addToCart() {
       if (this.inventory > 0) {
-        this.$emit("update-cart", 1);
+        this.$emit("update-cart", this.variants[this.selectedVariant].id);
       }
     },
     decrease() {
-      this.$emit("update-cart", -1);
+      this.$emit("decrease-cart", this.variants[this.selectedVariant].id);
     },
     updateVariant(index) {
       this.selectedVariant = index;

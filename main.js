@@ -3,7 +3,7 @@ import ProductDisplay from "./components/ProductDisplay.js";
 const app = Vue.createApp({
   data() {
     return {
-      cart: 0,
+      cart: [],
       premium: true,
     };
   },
@@ -11,8 +11,14 @@ const app = Vue.createApp({
     ProductDisplay,
   },
   methods: {
-    updateCart(amount) {
-      this.cart += amount;
+    updateCart(id) {
+      this.cart.push(id);
+    },
+    decreaseCart(id) {
+      const index = this.cart.lastIndexOf(id);
+      if (index !== -1) {
+        this.cart.splice(index, 1);
+      }
     },
   },
 });
